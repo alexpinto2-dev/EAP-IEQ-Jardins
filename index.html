@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>EAP — Conexão Quadrangular | IEQ Jardins · APTEC Consultoria</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0e1a2b;
+    --ink-soft: #1f2c40;
+    --ink-mute: #4a5568;
+    --paper: #f7f5f0;
+    --paper-soft: #efeae0;
+    --paper-warm: #e7dfcd;
+    --gold: #b8924f;
+    --gold-deep: #8d6d34;
+    --gold-glow: #d4b06a;
+    --accent: #1e3a5f;
+    --accent-deep: #0f2540;
+    --line: rgba(14, 26, 43, 0.10);
+    --line-strong: rgba(14, 26, 43, 0.20);
+    --shadow-soft: 0 1px 2px rgba(14, 26, 43, 0.04), 0 8px 24px rgba(14, 26, 43, 0.06);
+    --shadow-deep: 0 2px 6px rgba(14, 26, 43, 0.08), 0 24px 60px rgba(14, 26, 43, 0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.55;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(184, 146, 79, 0.06), transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(30, 58, 95, 0.05), transparent 50%);
+  }
+
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 32px;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* ============ TOP CHURCH BAR ============ */
+  .top-bar {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 14px 0;
+    position: relative;
+    z-index: 110;
+    border-bottom: 1px solid var(--gold-deep);
+  }
+  .top-bar-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .church-id {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .church-logo {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+  }
+  .church-name {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+  }
+  .church-name strong {
+    font-family: 'DM Serif Display', serif;
+    font-weight: 400;
+    font-size: 17px;
+    letter-spacing: 0.01em;
+    color: var(--paper);
+  }
+  .church-name small {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--gold-glow);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .top-bar-right {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: rgba(247, 245, 240, 0.65);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .top-bar-right .dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold-glow);
+    margin: 0 8px;
+    vertical-align: middle;
+  }
+
+  /* ============ NAV ============ */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(247, 245, 240, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 32px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .brand-mark {
+    width: 38px;
+    height: 38px;
+    border-radius: 6px;
+    background: var(--ink);
+    display: grid;
+    place-items: center;
+    color: var(--gold-glow);
+    font-family: 'DM Serif Display', serif;
+    font-weight: 400;
+    font-size: 18px;
+    border: 1px solid var(--gold-deep);
+  }
+  .brand-text { display: flex; flex-direction: column; line-height: 1.1; }
+  .brand-name {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+  }
+  .brand-sub {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-mute);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+  .nav-links a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold-deep); }
+  .nav-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    padding: 6px 10px;
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    color: var(--ink-mute);
+    letter-spacing: 0.1em;
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    padding: 80px 0 60px;
+    position: relative;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: end;
+  }
+  .hero-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--ink-mute);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero-meta::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--gold-deep);
+  }
+  .hero-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--accent);
+    margin-bottom: 18px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  h1.hero-title {
+    font-family: 'DM Serif Display', serif;
+    font-weight: 400;
+    font-size: clamp(46px, 6.4vw, 86px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  h1.hero-title .accent {
+    font-style: italic;
+    color: var(--gold-deep);
+  }
+  h1.hero-title .small {
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.22em;
+    font-weight: 400;
+    color: var(--ink-mute);
+    margin-top: 16px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .hero-right {
+    padding-bottom: 12px;
+  }
+  .hero-desc {
+    font-size: 17px;
+    color: var(--ink-soft);
+    max-width: 480px;
+    line-height: 1.65;
+  }
+  .hero-quote {
+    margin-top: 28px;
+    padding-left: 20px;
+    border-left: 2px solid var(--gold);
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  /* ============ STATS BAR ============ */
+  .stats {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+  }
+  .stat {
+    padding: 28px 24px;
+    border-right: 1px solid var(--line);
+    position: relative;
+  }
+  .stat:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-weight: 400;
+    font-size: 56px;
+    line-height: 1;
+    color: var(--ink);
+    letter-spacing: -0.03em;
+  }
+  .stat-num .unit {
+    font-size: 24px;
+    color: var(--gold-deep);
+    font-style: italic;
+  }
+  .stat-label {
+    margin-top: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-mute);
+  }
+  .stat-tag {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--gold-deep);
+    letter-spacing: 0.15em;
+  }
+
+  /* ============ SECTION BASE ============ */
+  section.block { padding: 100px 0; position: relative; }
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 56px;
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 24px;
+  }
+  .section-head-left { max-width: 700px; }
+  .section-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--gold-deep);
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-weight: 400;
+    font-size: clamp(34px, 4.6vw, 52px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .section-title em {
+    font-style: italic;
+    color: var(--gold-deep);
+  }
+  .section-desc {
+    color: var(--ink-mute);
+    margin-top: 12px;
+    font-size: 15px;
+    max-width: 540px;
+  }
+
+  /* ============ TABS ============ */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 40px;
+    background: var(--paper-soft);
+    padding: 5px;
+    border-radius: 8px;
+    width: fit-content;
+    border: 1px solid var(--line);
+  }
+  .tab {
+    background: transparent;
+    border: none;
+    padding: 10px 22px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-mute);
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.25s;
+    letter-spacing: 0.01em;
+  }
+  .tab.active {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .tab:not(.active):hover { color: var(--ink); }
+
+  /* ============ PHASE NAV ============ */
+  .phase-nav {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+  .phase-pill {
+    background: var(--paper-soft);
+    border: 1px solid var(--line);
+    padding: 18px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  .phase-pill::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--ink) 0%, var(--accent-deep) 100%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 0;
+  }
+  .phase-pill > * { position: relative; z-index: 1; }
+  .phase-pill:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-soft);
+    border-color: var(--gold);
+  }
+  .phase-pill.active::before { opacity: 1; }
+  .phase-pill.active { border-color: var(--ink); box-shadow: var(--shadow-deep); }
+  .phase-pill.active .pill-num,
+  .phase-pill.active .pill-title,
+  .phase-pill.active .pill-count { color: var(--paper); }
+  .phase-pill.active .pill-num { color: var(--gold-glow); }
+
+  .pill-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--gold-deep);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .pill-title {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 1.25;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+    margin-bottom: 10px;
+  }
+  .pill-count {
+    font-size: 11px;
+    color: var(--ink-mute);
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+
+  /* ============ PHASE CONTENT ============ */
+  .phase-content { display: none; scroll-margin-top: 120px; }
+  .phase-content.active { display: block; animation: fadeUp 0.5s ease; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .phase-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 32px;
+    padding: 36px;
+    background: linear-gradient(135deg, var(--ink) 0%, var(--accent-deep) 100%);
+    border-radius: 12px;
+    color: var(--paper);
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .phase-header::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 60%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(184, 146, 79, 0.13), transparent 60%);
+    pointer-events: none;
+  }
+  .phase-num-big {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 80px;
+    line-height: 0.85;
+    color: var(--gold-glow);
+    letter-spacing: -0.04em;
+    flex-shrink: 0;
+    min-width: 130px;
+  }
+  .phase-info-block { flex: 1; padding-top: 8px; }
+  .phase-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--gold-glow);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .phase-name {
+    font-family: 'DM Serif Display', serif;
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    margin-bottom: 12px;
+  }
+  .phase-desc {
+    color: rgba(247, 245, 240, 0.78);
+    font-size: 15px;
+    max-width: 560px;
+    line-height: 1.65;
+  }
+
+  /* ============ PACOTES ============ */
+  .packages {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .pkg {
+    background: var(--paper-soft);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 28px;
+    transition: all 0.3s;
+    position: relative;
+    scroll-margin-top: 120px;
+  }
+  .pkg:hover {
+    border-color: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-soft);
+  }
+  .pkg.flash {
+    animation: flash 1.6s ease;
+    border-color: var(--gold);
+  }
+  @keyframes flash {
+    0%, 100% { box-shadow: var(--shadow-soft); }
+    30% { box-shadow: 0 0 0 3px var(--gold-glow), var(--shadow-deep); }
+  }
+  .pkg-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px dashed var(--line-strong);
+  }
+  .pkg-code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gold-deep);
+    letter-spacing: 0.05em;
+  }
+  .pkg-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    padding: 4px 10px;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 3px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .pkg-title {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 19px;
+    line-height: 1.25;
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+  }
+  .pkg-items { list-style: none; }
+  .pkg-items li {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    padding: 9px 0 9px 22px;
+    border-bottom: 1px solid var(--line);
+    line-height: 1.5;
+    position: relative;
+  }
+  .pkg-items li:last-child { border-bottom: none; padding-bottom: 0; }
+  .pkg-items li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 16px;
+    width: 12px;
+    height: 1px;
+    background: var(--gold-deep);
+  }
+  .pkg-items li .sub {
+    display: block;
+    margin-top: 4px;
+    margin-left: 12px;
+    font-size: 12px;
+    color: var(--ink-mute);
+    line-height: 1.5;
+  }
+  .pkg-items li .sub::before {
+    content: '·';
+    margin-right: 6px;
+    color: var(--gold-deep);
+    font-weight: bold;
+  }
+
+  /* ============ DIAGRAM VIEW ============ */
+  .diagram-view { display: none; }
+  .diagram-view.active { display: block; animation: fadeUp 0.5s ease; }
+  .diagram-wrap {
+    background: var(--paper-soft);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 40px 24px;
+    overflow-x: auto;
+  }
+  .diagram-tip {
+    text-align: center;
+    margin-bottom: 32px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-mute);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .diagram-tip strong { color: var(--gold-deep); }
+  .diagram-tree {
+    min-width: 980px;
+    margin: 0 auto;
+  }
+  .diagram-root {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0;
+  }
+  .root-node {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 18px 36px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: var(--shadow-deep);
+    border: 1px solid var(--gold);
+  }
+  .root-node .lbl {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--gold-glow);
+    letter-spacing: 0.2em;
+    margin-bottom: 4px;
+  }
+  .root-node .name {
+    font-family: 'DM Serif Display', serif;
+    font-weight: 400;
+    font-size: 22px;
+  }
+  .diagram-trunk {
+    height: 30px;
+    width: 2px;
+    background: var(--line-strong);
+    margin: 0 auto;
+  }
+  .diagram-branch {
+    height: 2px;
+    background: var(--line-strong);
+    width: calc(100% - 80px);
+    margin-left: 40px;
+    margin-right: 40px;
+  }
+  .diagram-phases {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-top: 0;
+  }
+  .diag-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .diag-stem {
+    width: 2px;
+    height: 24px;
+    background: var(--line-strong);
+  }
+  .diag-phase {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 14px 18px;
+    border-radius: 6px;
+    text-align: center;
+    width: 100%;
+    border: 1px solid var(--gold-deep);
+    cursor: pointer;
+    transition: all 0.25s;
+    text-decoration: none;
+    display: block;
+  }
+  .diag-phase:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-deep);
+    border-color: var(--gold-glow);
+  }
+  .diag-phase .pn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--gold-glow);
+    letter-spacing: 0.15em;
+    margin-bottom: 4px;
+  }
+  .diag-phase .tt {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 1.25;
+    color: var(--paper);
+  }
+  .diag-children {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    margin-top: 12px;
+  }
+  .diag-child {
+    background: var(--paper);
+    border: 1px solid var(--line-strong);
+    padding: 10px 12px;
+    border-radius: 5px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    text-align: center;
+    line-height: 1.3;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+  }
+  .diag-child:hover {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--gold);
+    transform: translateX(2px);
+  }
+  .diag-child:hover .cnum { color: var(--gold-glow); }
+  .diag-child .cnum {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--gold-deep);
+    margin-bottom: 2px;
+    display: block;
+    transition: color 0.2s;
+  }
+
+  /* ============ TIMELINE FLOW ============ */
+  .flow-section {
+    background: var(--ink);
+    color: var(--paper);
+    margin: 60px 0 0;
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .flow-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 10% 20%, rgba(184, 146, 79, 0.1), transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(30, 58, 95, 0.3), transparent 50%);
+    pointer-events: none;
+  }
+  .flow-section .section-tag { color: var(--gold-glow); }
+  .flow-section .section-title { color: var(--paper); }
+  .flow-section .section-head { border-bottom-color: rgba(247, 245, 240, 0.18); }
+  .flow-section .section-desc { color: rgba(247, 245, 240, 0.65); }
+  .flow-track {
+    position: relative;
+    padding-left: 60px;
+  }
+  .flow-track::before {
+    content: '';
+    position: absolute;
+    left: 24px;
+    top: 16px;
+    bottom: 16px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--gold), rgba(184, 146, 79, 0.2));
+  }
+  .flow-step {
+    position: relative;
+    padding: 0 0 48px;
+  }
+  .flow-step:last-child { padding-bottom: 0; }
+  .flow-marker {
+    position: absolute;
+    left: -50px;
+    top: 4px;
+    width: 18px;
+    height: 18px;
+    background: var(--gold);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px var(--ink), 0 0 0 5px var(--gold-deep);
+  }
+  .flow-step-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--gold-glow);
+    letter-spacing: 0.2em;
+    margin-bottom: 8px;
+  }
+  .flow-step-title {
+    font-family: 'DM Serif Display', serif;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+  }
+  .flow-step-desc {
+    color: rgba(247, 245, 240, 0.7);
+    font-size: 14.5px;
+    max-width: 600px;
+    line-height: 1.65;
+  }
+
+  /* ============ FOOTER ============ */
+  footer {
+    background: var(--paper-warm);
+    padding: 80px 0 40px;
+    border-top: 1px solid var(--line-strong);
+    position: relative;
+  }
+  .foot-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 60px;
+  }
+  .foot-brand {
+    font-family: 'DM Serif Display', serif;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    max-width: 380px;
+  }
+  .foot-brand em { font-style: italic; color: var(--gold-deep); }
+  .foot-tagline {
+    margin-top: 16px;
+    color: var(--ink-mute);
+    font-size: 14px;
+    max-width: 420px;
+    line-height: 1.6;
+  }
+  .foot-col h4 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--gold-deep);
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+  .foot-col p, .foot-col a {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+  .foot-col a:hover { color: var(--gold-deep); }
+  .foot-bottom {
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-mute);
+    letter-spacing: 0.05em;
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 980px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 32px; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stat:nth-child(2) { border-right: none; }
+    .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1px solid var(--line); }
+    .phase-nav { grid-template-columns: repeat(2, 1fr); }
+    .packages { grid-template-columns: 1fr; }
+    .foot-grid { grid-template-columns: 1fr; gap: 32px; }
+    .nav-links { display: none; }
+    .container { padding: 0 20px; }
+    .top-bar-inner { padding: 0 20px; }
+    .top-bar-right { display: none; }
+    .phase-header { flex-direction: column; padding: 28px; }
+    .phase-num-big { font-size: 60px; min-width: auto; }
+    .section-head { flex-direction: column; align-items: flex-start; gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ TOP CHURCH BAR ============ -->
+<div class="top-bar">
+  <div class="top-bar-inner">
+    <div class="church-id">
+      <!-- IEQ Quadrangular logo: Cross, Dove, Cup, Crown (the four offices) -->
+      <svg class="church-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Logo IEQ Quadrangular">
+        <!-- Diamond outer -->
+        <g transform="translate(50,50) rotate(45)">
+          <rect x="-34" y="-34" width="68" height="68" rx="4" fill="none" stroke="#d4b06a" stroke-width="2"/>
+          <rect x="-34" y="-34" width="68" height="68" rx="4" fill="none" stroke="#d4b06a" stroke-width="0.6" opacity="0.4" transform="scale(0.85)"/>
+        </g>
+        <!-- Cross (top quadrant) -->
+        <g transform="translate(50,24)" fill="#d4b06a">
+          <rect x="-1.4" y="-9" width="2.8" height="18" rx="0.5"/>
+          <rect x="-6" y="-3" width="12" height="2.8" rx="0.5"/>
+        </g>
+        <!-- Dove (right quadrant) -->
+        <g transform="translate(76,50)" fill="#d4b06a">
+          <path d="M -9,0 Q -6,-6 0,-6 Q 5,-6 7,-2 L 9,-5 L 8,0 Q 6,3 1,3 Q -4,4 -9,2 Z" />
+          <circle cx="-7.5" cy="-1" r="0.9" fill="#0e1a2b"/>
+          <path d="M -2,1 Q 0,4 3,4 L 1,1 Z" opacity="0.7"/>
+        </g>
+        <!-- Cup / Chalice (bottom quadrant) -->
+        <g transform="translate(50,76)" fill="#d4b06a">
+          <path d="M -7,-7 L 7,-7 L 5,1 Q 5,4 0,4 Q -5,4 -5,1 Z"/>
+          <rect x="-1.5" y="4" width="3" height="3"/>
+          <rect x="-6" y="6.5" width="12" height="2.2" rx="0.5"/>
+        </g>
+        <!-- Crown (left quadrant) -->
+        <g transform="translate(24,50)" fill="#d4b06a">
+          <path d="M -7,3 L -7,-3 L -3.5,1 L 0,-5 L 3.5,1 L 7,-3 L 7,3 Z"/>
+          <rect x="-7" y="3" width="14" height="2.4" rx="0.5"/>
+          <circle cx="-3.5" cy="-4" r="0.9"/>
+          <circle cx="0" cy="-6" r="0.9"/>
+          <circle cx="3.5" cy="-4" r="0.9"/>
+        </g>
+      </svg>
+      <div class="church-name">
+        <strong>IEQ Jardins</strong>
+        <small>Igreja do Evangelho Quadrangular · Aracaju/SE</small>
+      </div>
+    </div>
+    <div class="top-bar-right">
+      <span>Documento Oficial</span>
+      <span class="dot"></span>
+      <span>EAP v1.0</span>
+      <span class="dot"></span>
+      <span>2026</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ NAV ============ -->
+<nav>
+  <div class="nav-inner">
+    <a class="brand" href="#top">
+      <div class="brand-mark">A</div>
+      <div class="brand-text">
+        <span class="brand-name">APTEC Consultoria</span>
+        <span class="brand-sub">Conexão Quadrangular</span>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="#fases">Fases</a>
+      <a href="#diagrama" id="navDiagram">Diagrama</a>
+      <a href="#fluxo">Fluxo</a>
+      <a href="#contato">Contato</a>
+      <span class="nav-tag">PROJETO 2026</span>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-meta">EAP · Estrutura Analítica do Projeto</div>
+        <p class="hero-eyebrow">Conexão Quadrangular</p>
+        <h1 class="hero-title">
+          Automação<br/>
+          <span class="accent">inteligente</span><br/>
+          do WhatsApp
+          <span class="small">Igreja do Evangelho Quadrangular · Jardins</span>
+        </h1>
+      </div>
+      <div class="hero-right">
+        <p class="hero-desc">
+          Um sistema acolhedor, pastoral e seguro que aproxima a igreja dos seus membros e visitantes 24 horas por dia — preservando o tom de carinho que define a IEQ Jardins.
+        </p>
+        <div class="hero-quote">
+          “Tecnologia a serviço do cuidado.<br/>
+          Cada mensagem, um abraço; cada resposta, um gesto pastoral.”
+        </div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-tag">01</span>
+        <div class="stat-num">5</div>
+        <div class="stat-label">Fases do Projeto</div>
+      </div>
+      <div class="stat">
+        <span class="stat-tag">02</span>
+        <div class="stat-num">11</div>
+        <div class="stat-label">Pacotes de Trabalho</div>
+      </div>
+      <div class="stat">
+        <span class="stat-tag">03</span>
+        <div class="stat-num">24<span class="unit">h</span></div>
+        <div class="stat-label">Atendimento Ativo</div>
+      </div>
+      <div class="stat">
+        <span class="stat-tag">04</span>
+        <div class="stat-num">100<span class="unit">%</span></div>
+        <div class="stat-label">Tom Pastoral</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ FASES E PACOTES ============ -->
+<section class="block" id="fases">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-head-left">
+        <div class="section-tag">— 01 · Fases e Pacotes</div>
+        <h2 class="section-title">Visão <em>analítica</em> do projeto</h2>
+        <p class="section-desc">Selecione uma fase para conhecer os pacotes de trabalho e suas entregas. Estrutura hierárquica completa do projeto Conexão Quadrangular.</p>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" data-view="phases">Fases e Pacotes</button>
+      <button class="tab" data-view="diagram">Diagrama EAP</button>
+    </div>
+
+    <!-- PHASES VIEW -->
+    <div class="phases-view active" id="phasesView">
+      <div class="phase-nav">
+        <button class="phase-pill active" data-phase="1">
+          <span class="pill-num">01 · FASE</span>
+          <span class="pill-title">Iniciação e Planejamento</span>
+          <span class="pill-count">2 pacotes · 5 entregas</span>
+        </button>
+        <button class="phase-pill" data-phase="2">
+          <span class="pill-num">02 · FASE</span>
+          <span class="pill-title">Desenvolvimento da Automação</span>
+          <span class="pill-count">3 pacotes · 8 entregas</span>
+        </button>
+        <button class="phase-pill" data-phase="3">
+          <span class="pill-num">03 · FASE</span>
+          <span class="pill-title">Testes e Validação</span>
+          <span class="pill-count">2 pacotes · 4 entregas</span>
+        </button>
+        <button class="phase-pill" data-phase="4">
+          <span class="pill-num">04 · FASE</span>
+          <span class="pill-title">Implantação e Treinamento</span>
+          <span class="pill-count">2 pacotes · 4 entregas</span>
+        </button>
+        <button class="phase-pill" data-phase="5">
+          <span class="pill-num">05 · FASE</span>
+          <span class="pill-title">Suporte e Melhoria Contínua</span>
+          <span class="pill-count">2 pacotes · 3 entregas</span>
+        </button>
+      </div>
+
+      <!-- FASE 1 -->
+      <div class="phase-content active" data-phase-content="1" id="phase-1">
+        <div class="phase-header">
+          <div class="phase-num-big">1.0</div>
+          <div class="phase-info-block">
+            <div class="phase-tag">Fase Inicial</div>
+            <h3 class="phase-name">Iniciação e Planejamento do Projeto</h3>
+            <p class="phase-desc">Alinhamento doutrinário, definição de tom de voz pastoral e mapeamento completo do cenário atual de atendimento da igreja.</p>
+          </div>
+        </div>
+        <div class="packages">
+          <div class="pkg" id="pkg-1-1">
+            <div class="pkg-head">
+              <span class="pkg-code">1.1</span>
+              <span class="pkg-badge">Doutrinário</span>
+            </div>
+            <h4 class="pkg-title">Alinhamento Doutrinário e Requisitos</h4>
+            <ul class="pkg-items">
+              <li>1.1.1 — Reunião inicial com pastores para alinhar visão, valores e tom espiritual</li>
+              <li>1.1.2 — Definição do tom de voz (carinhoso, pastoral e quadrangular)</li>
+              <li>1.1.3 — Mapeamento completo dos atendimentos atuais, listas de transmissão e grupos</li>
+            </ul>
+          </div>
+          <div class="pkg" id="pkg-1-2">
+            <div class="pkg-head">
+              <span class="pkg-code">1.2</span>
+              <span class="pkg-badge">Técnico</span>
+            </div>
+            <h4 class="pkg-title">Definição do Escopo Técnico</h4>
+            <ul class="pkg-items">
+              <li>1.2.1 — Escolha das ferramentas ideais para a igreja (simples, segura e estável)</li>
+              <li>1.2.2 — Configuração do número oficial da IEQ Jardins no WhatsApp Business</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- FASE 2 -->
+      <div class="phase-content" data-phase-content="2" id="phase-2">
+        <div class="phase-header">
+          <div class="phase-num-big">2.0</div>
+          <div class="phase-info-block">
+            <div class="phase-tag">Construção</div>
+            <h3 class="phase-name">Desenvolvimento da Automação</h3>
+            <p class="phase-desc">Criação dos fluxos inteligentes, regras de direcionamento pastoral e orquestração das listas e grupos oficiais da igreja.</p>
+          </div>
+        </div>
+        <div class="packages">
+          <div class="pkg" id="pkg-2-1">
+            <div class="pkg-head">
+              <span class="pkg-code">2.1</span>
+              <span class="pkg-badge">Atendimento</span>
+            </div>
+            <h4 class="pkg-title">Atendimento Automático 24 horas</h4>
+            <ul class="pkg-items">
+              <li>2.1.1 — Fluxo de boas-vindas (horários de cultos, endereço, mapa e apresentação dos pastores)</li>
+              <li>2.1.2 — Respostas automáticas para as dúvidas mais comuns dos irmãos e visitantes</li>
+            </ul>
+          </div>
+          <div class="pkg" id="pkg-2-2">
+            <div class="pkg-head">
+              <span class="pkg-code">2.2</span>
+              <span class="pkg-badge">Inteligência</span>
+            </div>
+            <h4 class="pkg-title">Direcionamento Inteligente</h4>
+            <ul class="pkg-items">
+              <li>2.2.1 — Identificação automática do tipo de mensagem recebida</li>
+              <li>2.2.2 — Regras de encaminhamento por categoria
+                <span class="sub">Pedido de oração → conforto + pastor responsável</span>
+                <span class="sub">Visita ou célula → equipe de recepção/discipulado</span>
+                <span class="sub">Urgências → notificação imediata ao pastor</span>
+              </li>
+              <li>2.2.3 — Classificação automática das mensagens por tags</li>
+            </ul>
+          </div>
+          <div class="pkg" id="pkg-2-3" style="grid-column: 1 / -1;">
+            <div class="pkg-head">
+              <span class="pkg-code">2.3</span>
+              <span class="pkg-badge">Comunicação</span>
+            </div>
+            <h4 class="pkg-title">Gestão de Disparos e Avisos</h4>
+            <ul class="pkg-items">
+              <li>2.3.1 — Organização e otimização das listas de transmissão atuais</li>
+              <li>2.3.2 — Criação de grupos oficiais de avisos (controlados — apenas administradores enviam)</li>
+              <li>2.3.3 — Automação de envios segmentados (cultos, eventos, devocionais)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- FASE 3 -->
+      <div class="phase-content" data-phase-content="3" id="phase-3">
+        <div class="phase-header">
+          <div class="phase-num-big">3.0</div>
+          <div class="phase-info-block">
+            <div class="phase-tag">Validação</div>
+            <h3 class="phase-name">Testes e Validação</h3>
+            <p class="phase-desc">Simulação completa de cenários reais e teste piloto controlado com membros para garantir qualidade pastoral antes do lançamento.</p>
+          </div>
+        </div>
+        <div class="packages">
+          <div class="pkg" id="pkg-3-1">
+            <div class="pkg-head">
+              <span class="pkg-code">3.1</span>
+              <span class="pkg-badge">Interno</span>
+            </div>
+            <h4 class="pkg-title">Testes Internos</h4>
+            <ul class="pkg-items">
+              <li>3.1.1 — Simulação de mensagens (oração, visita, dúvida, urgência)</li>
+              <li>3.1.2 — Verificação dos direcionamentos automáticos</li>
+            </ul>
+          </div>
+          <div class="pkg" id="pkg-3-2">
+            <div class="pkg-head">
+              <span class="pkg-code">3.2</span>
+              <span class="pkg-badge">Piloto</span>
+            </div>
+            <h4 class="pkg-title">Teste Piloto com Membros</h4>
+            <ul class="pkg-items">
+              <li>3.2.1 — Liberação controlada para grupo de 30 a 50 irmãos</li>
+              <li>3.2.2 — Coleta de feedback e ajustes necessários</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- FASE 4 -->
+      <div class="phase-content" data-phase-content="4" id="phase-4">
+        <div class="phase-header">
+          <div class="phase-num-big">4.0</div>
+          <div class="phase-info-block">
+            <div class="phase-tag">Lançamento</div>
+            <h3 class="phase-name">Implantação e Treinamento</h3>
+            <p class="phase-desc">Ativação oficial do sistema com comunicação clara à igreja e capacitação prática da liderança pastoral e voluntários.</p>
+          </div>
+        </div>
+        <div class="packages">
+          <div class="pkg" id="pkg-4-1">
+            <div class="pkg-head">
+              <span class="pkg-code">4.1</span>
+              <span class="pkg-badge">Go-Live</span>
+            </div>
+            <h4 class="pkg-title">Lançamento Oficial</h4>
+            <ul class="pkg-items">
+              <li>4.1.1 — Ativação completa da automação no número da igreja</li>
+              <li>4.1.2 — Comunicação clara aos membros sobre o novo sistema</li>
+            </ul>
+          </div>
+          <div class="pkg" id="pkg-4-2">
+            <div class="pkg-head">
+              <span class="pkg-code">4.2</span>
+              <span class="pkg-badge">Equipe</span>
+            </div>
+            <h4 class="pkg-title">Capacitação da Equipe</h4>
+            <ul class="pkg-items">
+              <li>4.2.1 — Treinamento prático para pastores, presbíteros e líderes</li>
+              <li>4.2.2 — Manual simples de acompanhamento e intervenção</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- FASE 5 -->
+      <div class="phase-content" data-phase-content="5" id="phase-5">
+        <div class="phase-header">
+          <div class="phase-num-big">5.0</div>
+          <div class="phase-info-block">
+            <div class="phase-tag">Pós-Implantação</div>
+            <h3 class="phase-name">Suporte e Melhoria Contínua</h3>
+            <p class="phase-desc">Acompanhamento mensal contínuo, ajustes proativos e relatórios de resultados para que o sistema cresça junto com a igreja.</p>
+          </div>
+        </div>
+        <div class="packages">
+          <div class="pkg" id="pkg-5-1">
+            <div class="pkg-head">
+              <span class="pkg-code">5.1</span>
+              <span class="pkg-badge">Suporte</span>
+            </div>
+            <h4 class="pkg-title">Suporte Mensal</h4>
+            <ul class="pkg-items">
+              <li>5.1.1 — Monitoramento constante do funcionamento da automação</li>
+              <li>5.1.2 — Ajustes e melhorias contínuas conforme a igreja</li>
+            </ul>
+          </div>
+          <div class="pkg" id="pkg-5-2">
+            <div class="pkg-head">
+              <span class="pkg-code">5.2</span>
+              <span class="pkg-badge">Resultados</span>
+            </div>
+            <h4 class="pkg-title">Relatórios de Resultados</h4>
+            <ul class="pkg-items">
+              <li>5.2.1 — Relatório mensal com mensagens atendidas, orações registradas e engajamento</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DIAGRAM VIEW -->
+    <div class="diagram-view" id="diagramView">
+      <div class="diagram-tip">Dica · <strong>clique em qualquer fase ou pacote</strong> para abrir os detalhes</div>
+      <div class="diagram-wrap">
+        <div class="diagram-tree">
+          <div class="diagram-root">
+            <div class="root-node">
+              <div class="lbl">PROJETO</div>
+              <div class="name">Conexão Quadrangular</div>
+            </div>
+          </div>
+          <div class="diagram-trunk"></div>
+          <div class="diagram-branch"></div>
+          <div class="diagram-phases">
+            <div class="diag-col">
+              <div class="diag-stem"></div>
+              <a href="#phase-1" class="diag-phase" data-jump="1">
+                <div class="pn">1.0</div>
+                <div class="tt">Iniciação</div>
+              </a>
+              <div class="diag-children">
+                <a href="#pkg-1-1" class="diag-child" data-jump="1" data-pkg="1-1"><span class="cnum">1.1</span>Alinhamento Doutrinário</a>
+                <a href="#pkg-1-2" class="diag-child" data-jump="1" data-pkg="1-2"><span class="cnum">1.2</span>Escopo Técnico</a>
+              </div>
+            </div>
+            <div class="diag-col">
+              <div class="diag-stem"></div>
+              <a href="#phase-2" class="diag-phase" data-jump="2">
+                <div class="pn">2.0</div>
+                <div class="tt">Desenvolvimento</div>
+              </a>
+              <div class="diag-children">
+                <a href="#pkg-2-1" class="diag-child" data-jump="2" data-pkg="2-1"><span class="cnum">2.1</span>Atendimento 24h</a>
+                <a href="#pkg-2-2" class="diag-child" data-jump="2" data-pkg="2-2"><span class="cnum">2.2</span>Direcionamento</a>
+                <a href="#pkg-2-3" class="diag-child" data-jump="2" data-pkg="2-3"><span class="cnum">2.3</span>Disparos e Avisos</a>
+              </div>
+            </div>
+            <div class="diag-col">
+              <div class="diag-stem"></div>
+              <a href="#phase-3" class="diag-phase" data-jump="3">
+                <div class="pn">3.0</div>
+                <div class="tt">Testes</div>
+              </a>
+              <div class="diag-children">
+                <a href="#pkg-3-1" class="diag-child" data-jump="3" data-pkg="3-1"><span class="cnum">3.1</span>Testes Internos</a>
+                <a href="#pkg-3-2" class="diag-child" data-jump="3" data-pkg="3-2"><span class="cnum">3.2</span>Piloto com Membros</a>
+              </div>
+            </div>
+            <div class="diag-col">
+              <div class="diag-stem"></div>
+              <a href="#phase-4" class="diag-phase" data-jump="4">
+                <div class="pn">4.0</div>
+                <div class="tt">Implantação</div>
+              </a>
+              <div class="diag-children">
+                <a href="#pkg-4-1" class="diag-child" data-jump="4" data-pkg="4-1"><span class="cnum">4.1</span>Lançamento Oficial</a>
+                <a href="#pkg-4-2" class="diag-child" data-jump="4" data-pkg="4-2"><span class="cnum">4.2</span>Capacitação</a>
+              </div>
+            </div>
+            <div class="diag-col">
+              <div class="diag-stem"></div>
+              <a href="#phase-5" class="diag-phase" data-jump="5">
+                <div class="pn">5.0</div>
+                <div class="tt">Suporte</div>
+              </a>
+              <div class="diag-children">
+                <a href="#pkg-5-1" class="diag-child" data-jump="5" data-pkg="5-1"><span class="cnum">5.1</span>Suporte Mensal</a>
+                <a href="#pkg-5-2" class="diag-child" data-jump="5" data-pkg="5-2"><span class="cnum">5.2</span>Relatórios</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ FLUXO ============ -->
+<section class="flow-section" id="fluxo">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-head-left">
+        <div class="section-tag">— 02 · Linha do Tempo</div>
+        <h2 class="section-title">Do <em>alinhamento</em> ao acolhimento contínuo</h2>
+        <p class="section-desc">Cada fase é construída com cuidado pastoral. Da escuta inicial dos pastores ao acompanhamento mensal — o projeto é vivo e respira a identidade da igreja.</p>
+      </div>
+    </div>
+    <div class="flow-track">
+      <div class="flow-step">
+        <div class="flow-marker"></div>
+        <div class="flow-step-num">FASE 01</div>
+        <h3 class="flow-step-title">Escutar a igreja antes de programar qualquer linha</h3>
+        <p class="flow-step-desc">Tudo começa com uma conversa profunda com os pastores. Entendemos a visão, o tom e a identidade quadrangular antes de qualquer decisão técnica.</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-marker"></div>
+        <div class="flow-step-num">FASE 02</div>
+        <h3 class="flow-step-title">Construir um sistema que fala como pastor</h3>
+        <p class="flow-step-desc">A automação é desenhada com mensagens carinhosas, fluxos pastorais e direcionamento inteligente para que cada pessoa receba a atenção certa, no momento certo.</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-marker"></div>
+        <div class="flow-step-num">FASE 03</div>
+        <h3 class="flow-step-title">Validar com a comunidade antes do grande passo</h3>
+        <p class="flow-step-desc">Testes internos rigorosos e um piloto com 30 a 50 irmãos garantem que tudo funciona — e que o tom permanece humano e acolhedor.</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-marker"></div>
+        <div class="flow-step-num">FASE 04</div>
+        <h3 class="flow-step-title">Lançar com a igreja preparada</h3>
+        <p class="flow-step-desc">Ativação oficial com a liderança capacitada e os membros bem informados. Nenhuma surpresa — apenas mais cuidado disponível.</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-marker"></div>
+        <div class="flow-step-num">FASE 05</div>
+        <h3 class="flow-step-title">Cuidar do que foi construído, mês após mês</h3>
+        <p class="flow-step-desc">Suporte mensal e relatórios simples mostram o impacto: orações atendidas, novos visitantes acolhidos e a igreja conectada.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer id="contato">
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">Tecnologia <em>com cuidado pastoral</em>, feita para a sua igreja.</div>
+        <p class="foot-tagline">A APTEC Consultoria desenvolve soluções de automação inteligente sob medida — preservando a identidade, o tom e os valores de cada cliente.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Cliente</h4>
+        <p>IEQ Jardins</p>
+        <p>Aracaju · SE</p>
+        <p>Ano de execução · 2026</p>
+      </div>
+      <div class="foot-col">
+        <h4>Consultoria</h4>
+        <p>APTEC Consultoria</p>
+        <a href="#">aptec.consultoria@gmail.com</a>
+        <a href="#">Documento EAP · v1.0</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 APTEC CONSULTORIA</span>
+      <span>EAP · CONEXÃO QUADRANGULAR</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Tabs (Phases vs Diagram)
+  const tabs = document.querySelectorAll('.tab');
+  const phasesView = document.getElementById('phasesView');
+  const diagramView = document.getElementById('diagramView');
+
+  function setView(view) {
+    tabs.forEach(x => x.classList.toggle('active', x.dataset.view === view));
+    if (view === 'phases') {
+      phasesView.classList.add('active');
+      diagramView.classList.remove('active');
+    } else {
+      phasesView.classList.remove('active');
+      diagramView.classList.add('active');
+    }
+  }
+
+  tabs.forEach(t => {
+    t.addEventListener('click', () => setView(t.dataset.view));
+  });
+
+  // Phase navigation pills
+  const pills = document.querySelectorAll('.phase-pill');
+  const phaseContents = document.querySelectorAll('.phase-content');
+
+  function activatePhase(phase) {
+    pills.forEach(x => x.classList.toggle('active', x.dataset.phase === String(phase)));
+    phaseContents.forEach(c => {
+      c.classList.toggle('active', c.dataset.phaseContent === String(phase));
+    });
+  }
+
+  pills.forEach(p => {
+    p.addEventListener('click', () => activatePhase(p.dataset.phase));
+  });
+
+  // Diagram links → switch to phases view, activate the phase, scroll to the package
+  const diagLinks = document.querySelectorAll('.diag-phase, .diag-child');
+  diagLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const phase = link.dataset.jump;
+      const pkg = link.dataset.pkg; // e.g. "2-1"
+      setView('phases');
+      activatePhase(phase);
+      setTimeout(() => {
+        const targetId = pkg ? `pkg-${pkg}` : `phase-${phase}`;
+        const target = document.getElementById(targetId);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          if (pkg) {
+            target.classList.remove('flash');
+            void target.offsetWidth;
+            target.classList.add('flash');
+          }
+        }
+      }, 80);
+    });
+  });
+
+  // Top nav "Diagrama" jumps to diagram view
+  document.getElementById('navDiagram').addEventListener('click', (e) => {
+    e.preventDefault();
+    setView('diagram');
+    document.getElementById('fases').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+</script>
+
+</body>
+</html>
